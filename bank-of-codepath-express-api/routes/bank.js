@@ -17,6 +17,7 @@ router.get("/transactions", async (req, res, next) => {
 router.post("/transactions", async (req, res, next) => {
   try {
     const transaction = req.body.transaction
+    console.log(transaction)
     const newTransaction = await Bank.recordTransaction(transaction)
     res.status(201).json({ transaction: newTransaction })
   } catch (err) {

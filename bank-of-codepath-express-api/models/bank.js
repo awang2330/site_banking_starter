@@ -34,7 +34,6 @@ class Bank {
 
   static async recordTransaction(transaction) {
     // create a new transaction
-
     if (!transaction) {
       throw new BadRequestError(`No transaction sent.`)
     }

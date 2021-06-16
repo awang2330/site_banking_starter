@@ -37,12 +37,25 @@ export default function App() {
 
   }, []) // runs the useEffect only when the list changes (only once)
 
+  const addTransaction = (newTransaction) => {
+    setTransactions(t => [...t, newTransaction])
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home transactions={transactions} transfers={transfers}/>}/>
+          <Route path="/" 
+            element={<Home 
+              transactions={transactions} 
+              transfers={transfers} 
+              addTransaction={addTransaction}
+              isFetching={isFetching}
+              error={error}
+              filterInputValue={filterInputValue}
+            />}
+          />
           <Route path="/transactions/:transactionId" element={<TransactionDetail/>}/>
           <Route path="/transfer/:transferId" element={<TransactionDetail/>}/>
         </Routes>
