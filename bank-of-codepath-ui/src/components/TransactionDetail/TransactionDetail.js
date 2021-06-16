@@ -1,11 +1,34 @@
+import { useState, useEffect } from "react"
+import axios from "axios"
+import { useParams } from "react-router"
 import { formatAmount, formatDate } from "../../utils/format"
 import "./TransactionDetail.css"
 
-export default function TransactionDetail( {transactionItem, isLoadingBool, isErrorBool} ) {
-  const transactionId = transactionItem.id 
-  const transaction = transactionItem 
-  const isLoading = isLoadingBool // replace this
-  const error = isErrorBool // replace this
+export default function TransactionDetail() {
+  const { transactionId } = useParams()
+  const [transaction, setTransaction] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const fetchTransactionById = async () => {
+      setIsLoading(true)
+
+      try {
+        const res = await axios.get(`/transactions/${transactionId}`)
+        const transactionItem = res?.data?.transactions[transactionId]
+        if (transactionItem) {
+          setTransaction(transactionItem)
+        }
+      } catch (err) {
+        setError(err)
+      }
+
+      setIsLoading(false)
+    }
+
+    fetchTransactionById()
+  }, [transactionId])
 
   const renderTransactionContent = () => {
     if (isLoading) return <h1>Loading...</h1>

@@ -8,7 +8,7 @@ import "./App.css"
 
 export default function App() {
   const [isFetching, setIsFetching] = useState(false)
-  const [error, setErrors] = useState()
+  const [error, setError] = useState(null)
   const [filterInputValue, setfilterInputValue] = useState()
   const [transactions, setTransactions] = useState([])
   const [transfers, setTransfers] = useState([])
@@ -28,29 +28,23 @@ export default function App() {
         }
         
       } catch(err) {
-        setErrors(originalErrors => [...originalErrors, err])
+        setError(err)
       }
     }
     setIsFetching(true)
     fetchTransactions()
     setIsFetching(false)
 
-  }, []) //runs the useEffect only when the list changes (only once)
+  }, []) // runs the useEffect only when the list changes (only once)
 
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        <Route path="/" element={<Home transactions={transactions} transfers={transfers}/>}/>
-        {transactions.map(item => (
-          <Route path={`/transactions/${item.id}`} >
-            <TransactionDetail 
-              key={item.id}
-              transactionItem={item} 
-              isLoadingBool={false}
-              isErrorBool={false}/>
-          </Route>
-        ))}
+        <Routes>
+          <Route path="/" element={<Home transactions={transactions} transfers={transfers}/>}/>
+          <Route path="/transactions/:transactionId" element={<TransactionDetail/>}/>
+        </Routes>
       </BrowserRouter>
     </div>
   )
