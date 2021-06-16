@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 import { formatAmount, formatDate } from "../../utils/format"
 import "./TransactionDetail.css"
 
@@ -15,10 +15,10 @@ export default function TransactionDetail() {
       setIsLoading(true)
 
       try {
-        const res = await axios.get(`/transactions/${transactionId}`)
-        const transactionItem = res?.data?.transactions[transactionId]
-        if (transactionItem) {
-          setTransaction(transactionItem)
+        const res = await axios.get(`http://localhost:3001/bank/transactions/${transactionId}`)
+        const transaction = res?.data?.transaction
+        if (transaction) {
+          setTransaction(transaction)
         }
       } catch (err) {
         setError(err)

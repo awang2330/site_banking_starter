@@ -44,6 +44,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home transactions={transactions} transfers={transfers}/>}/>
           <Route path="/transactions/:transactionId" element={<TransactionDetail/>}/>
+          <Route path="/transfer/:transferId" element={<TransactionDetail/>}/>
         </Routes>
       </BrowserRouter>
     </div>
