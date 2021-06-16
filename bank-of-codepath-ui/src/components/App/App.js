@@ -41,10 +41,14 @@ export default function App() {
     setTransactions(t => [...t, newTransaction])
   }
 
+  const handleOnInputChange = () => {
+    
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar filterInputValue={filterInputValue} handleOnInputChange={handleOnInputChange}/>
         <Routes>
           <Route path="/" 
             element={<Home 

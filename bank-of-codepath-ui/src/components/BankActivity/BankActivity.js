@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { formatDate, formatAmount } from "../../utils/format"
 import "./BankActivity.css"
 
-export default function BankActivity({ transactions = [], transfers = [] }) {
+export default function BankActivity({ transactions = [], transfers = [] , filteredTransactions}) {
   return (
     <div className="BankActivity">
       <h2>Transactions</h2>
