@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import axios from "axios"
 import Navbar from "../Navbar/Navbar"
 import Home from "../Home/Home"
+import TransactionDetail from "../TransactionDetail/TransactionDetail"
 import "./App.css"
 
 export default function App() {
   const [isFetching, setIsFetching] = useState(false)
-  const [errors, setErrors] = useState([])
+  const [error, setErrors] = useState()
   const [filterInputValue, setfilterInputValue] = useState()
   const [transactions, setTransactions] = useState([])
   const [transfers, setTransfers] = useState([])
@@ -20,11 +22,9 @@ export default function App() {
         const transfers = resTransfers?.data?.transfers
         if (transactions) {
           setTransactions(transactions)
-          console.log(transactions)
         }
         if (transfers) {
           setTransfers(transfers)
-          console.log(transfers)
         }
         
       } catch(err) {
@@ -35,12 +35,23 @@ export default function App() {
     fetchTransactions()
     setIsFetching(false)
 
-  }, []) //runs the useEffect only when the list changes (only once )
+  }, []) //runs the useEffect only when the list changes (only once)
 
   return (
     <div className="App">
-      <Navbar />
-      <Home />
+      <BrowserRouter>
+        <Navbar />
+        <Route path="/" element={<Home transactions={transactions} transfers={transfers}/>}/>
+        {transactions.map(item => (
+          <Route path={`/transactions/${item.id}`} >
+            <TransactionDetail 
+              key={item.id}
+              transactionItem={item} 
+              isLoadingBool={false}
+              isErrorBool={false}/>
+          </Route>
+        ))}
+      </BrowserRouter>
     </div>
   )
 }

@@ -1,11 +1,11 @@
 import { formatAmount, formatDate } from "../../utils/format"
 import "./TransactionDetail.css"
 
-export default function TransactionDetail() {
-  const transactionId = null // replace this
-  const transaction = {} // replace this
-  const isLoading = false // replace this
-  const error = false // replace this
+export default function TransactionDetail( {transactionItem, isLoadingBool, isErrorBool} ) {
+  const transactionId = transactionItem.id 
+  const transaction = transactionItem 
+  const isLoading = isLoadingBool // replace this
+  const error = isErrorBool // replace this
 
   const renderTransactionContent = () => {
     if (isLoading) return <h1>Loading...</h1>
